@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<h1>
+    <meta charset="UTF-8">
+    <title>Game Over</title>
+    <h3><p>{{endreason}}</p></h3>
+    <p>You Lost!</p>
+    <p>Click below to start a new game.</p>
+</head>
+<body>
+
+<form action = "/new" method="post">
+    <p><input type="hidden" name="neworcontinue" value="newgame"></p>
+    <p><input type="submit" value="New Game"></p>
+</form>
+
+</body>
+</html>

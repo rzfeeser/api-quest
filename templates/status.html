@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API-Quest</title>
+</head>
+<body>
+<p>
+    <br>Total Moves: {{ turnno }}
+    {% if inventory %}
+    <br>Inventory: {{ inventory }}
+    {% else %}
+    <br>Inventory: nothing
+    {% endif %}
+    <br>You are currently in the {{ currentRoom }}
+    {% if item %}
+    <br>There is a {{ item }} here.
+    {% endif %}
+</p>
+
+{% if turnresult %}
+{{ turnresult }}
+{% endif %}
+
+<form action = "" method="post">
+    <p><input type="text" name="playermove"></p>
+    <p><input type="submit" value="Enter"></p>
+</form>
+
+</body>
+</html>
