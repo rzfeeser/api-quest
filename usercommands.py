@@ -39,7 +39,7 @@ def go(rooms, direction, currentRoom):
 def get(kitkat, currentRoom):
     if 'item' in session.get('rooms')[currentRoom]: # does the room have an item to be picked up?
         for oneword in session.get('rooms')[currentRoom]['item'].split(): # the item maybe a compound word so split it
-            if oneword == kitkat: # abbreviation matching EX: "skeleton" and "key" would match "skeleton key"
+            if kitkat == session.get('rooms')[currentRoom]['item'] or oneword == kitkat: # abbreviation matching EX: "skeleton" and "key" would match "skeleton key"
                 ## session['inventory'] += [kitkat]  # NO! This results in a user adding a single word to their inventory
                                                      # ex: if a skeleton key is in the room and they type 'get key' they
                                                      # end up with 'key' added to inventory

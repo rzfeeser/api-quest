@@ -1,0 +1,11 @@
+{
+  "lost":
+  {
+    "0": "I never saw anyone die THAT way before!",
+    "1": "There is a hungry Grue here! And you're invited to be dinner!"
+  },
+ "win":
+ {
+   "1":  "You enter the garden, and unlock the rusty gate with the skeleton key! You win!"
+ }
+}

@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Welcome to Alta3 Web RPG"""
+"""Welcome to Alta3 Web RPG
+By RZFeeser"""
 
 ## standard library
 import json
@@ -11,6 +12,9 @@ from flask import render_template
 from flask import redirect
 from flask import url_for
 from flask import request
+
+# pull in roomlogic
+from roomlogic import roomlogic
 
 ## parsing user commands
 # parse out get commands
@@ -56,6 +60,7 @@ def new():
             session.clear()   # if "Yes", clear the session cookie
             session["rooms"] = rooms # load the new game with newest world data
             session["currentRoom"] = "Hall"  # set the location as the Hall
+            session["health"] = 20  # required for battle system
             session["inventory"] = [] # cast inventory as an empty list
             session["turnno"] = 0 # number of moves taken
         return redirect(url_for("status")) # in all cases, move the user to status
@@ -74,18 +79,23 @@ def status():
         else:
             redirect(url_for("new"))
 
-        # Return your inventory
-        status['inventory'] = session.get('inventory')
+        ## currying functions (let a function return a function)
+        roomrun = roomlogic(status['currentRoom'])
+        # resp is the result of running that function
+        resp = roomrun(session)
+        # if that function did not return none
+        if resp:
+            resp()
+
 
         # If you met the objectives of the game
         # 1) you have the potion
         # 2) you have the skeleton key
-        if session.get("currentRoom") == "Garden":
-            if 'skeleton key' in session.get('inventory') and 'potion' in session.get('inventory'):
-                return redirect(url_for("gameover", endreason="""You enter the garden, and unlock the rusty gate with
-                the skeleton key!\nYou win!"""))
-            else:
-                session["turnresult"] = "You'd win if you only had a few more items..."
+#        if session.get("currentRoom") == "Garden":
+#            if 'skeleton key' in session.get('inventory') and 'potion' in session.get('inventory'):
+#                return redirect(url_for("gameover", endreason="win", endcode="1"))
+#            else:
+#                session["turnresult"] = "You'd win if you only had a few more items..."
 
         # An item is in the room you are in
         if 'item' in session.get('rooms')[session.get('currentRoom')]:
@@ -96,15 +106,20 @@ def status():
                 session['inventory'].remove("spell book") # remove the item "spell book" from the list
                 session['turnresult'] = "You walk into a dark room. A grue is here. As it approaches you, the spell book falls from your pouch and opens to a page with charcoal drawings of cryptic runes and a drawing of a latern. Bright light suddenly beams from the book eviserating the Grue."
             elif status['item'] == 'monster':
-                return redirect(url_for("gameover", endreason="""There is a hungry Grue here! And you're invited to be
-                dinner!"""))
+                return redirect(url_for("gameover", endreason="lost", endcode="1"))
         else:
             status['item'] = None
 
         # The current turn
         status['turnno'] = session.get('turnno')
-        # Results of last turn
-        status['turnresult'] = session.get('turnresult')
+        # Results of last turn or set the default turn result to the desc of the room
+        status['turnresult'] = session.get('turnresult', session.get('rooms')[session.get('currentRoom')].get('desc'))
+
+        # Return your health
+        status['health'] = session.get('health')
+
+        # Return your inventory
+        status['inventory'] = session.get('inventory')
 
         return render_template("status.html", **status) # return the status
     
@@ -129,16 +144,15 @@ def status():
      
         return redirect(url_for("status"))
 
-
-
-@app.route("/gameover/<endreason>", methods=["GET"])
-def gameover(endreason):
-    if request.method == "GET":
+@app.route("/gameover/", methods=["GET"])
+def gameover():
+    endreason = request.args.get('endreason', "lost") # pass "lost" as the default
+    endcode = request.args.get('endcode', "0") # pass "0" as the default if endcode was not passed
+    with open("endgame.json") as endgamefile: # load the list of ways to end the game
+        whywin = json.load(endgamefile)
+    if request.method == "GET": # requested the game to end
         session.clear()  # delete the user's session cookie
-        if "win" in endreason:
-            return render_template("win.html", endreason=endreason)
-        else:
-            return render_template("gameover.html", endreason=endreason)
+        return render_template("gameover.html", endreason=endreason, endmeta=whywin[endreason][endcode])
 
 if __name__ == "__main__":
     app.run(port=5006)
