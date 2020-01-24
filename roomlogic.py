@@ -9,7 +9,8 @@ def roomlogic(currentroom):
     ## garden logic
     def garden(session):
         if 'skeleton key' in session.get('inventory'):
-            x = lambda: redirect(url_for("gameover", endreason="win", endcode="1"))
+            # x = lambda: redirect(url_for("gameover", endreason="win", endcode="1"))
+            x = ("gameover", "win", "1") # return a tuple of what to plug in
             return x
         else:
             session["turnresult"] = "You'd win if you only had a few more items..."
