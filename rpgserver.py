@@ -3,6 +3,9 @@
 By RZFeeser"""
 
 ## standard library
+from inspect import isfunction # test if user defined function
+
+## standard library
 import json
 
 ## flask imports
@@ -21,6 +24,8 @@ from roomlogic import roomlogic
 from usercommands import get
 # parse out go commands
 from usercommands import go
+# parse out look command
+from usercommands import look
 
 """
 Flask Sessions are leveraged to store encrypted cookie data, the player's state, on the client side.
@@ -83,10 +88,17 @@ def status():
         roomrun = roomlogic(status['currentRoom'])
         # resp is the result of running that function
         resp = roomrun(session)
-        # if that function did not return none
-        if resp:
+        # if that function returned a user defined function execute it
+        if isfunction(resp):
             resp()
-
+        # this is kind of dumb / ugly code
+        elif resp == None:
+        #    print("none")
+            pass
+        elif resp[0] == "gameover":
+            return redirect(url_for("gameover", endreason=resp[1], endcode=resp[2]))
+        #else:
+        #    print(resp)
 
         # If you met the objectives of the game
         # 1) you have the potion
@@ -135,6 +147,8 @@ def status():
                 session["turnresult"] = go(rooms, playermove[1], session.get("currentRoom"))
             elif playermove[0] == "get": # if the user typed 'get'
                 session["turnresult"] = get(playermove[1], session.get("currentRoom"))
+            elif playermove[0] == "look": # if the user typed 'look'
+                session["turnresult"] = look(rooms, session.get("currentRoom"))
             elif playermove[0] == "help": # if the user typed 'help'
                 session["turnresult"] = gamehelp()
             else:

@@ -16,12 +16,20 @@ def roomlogic(currentroom):
             session["turnresult"] = "You'd win if you only had a few more items..."
             return
 
+    ## library logic
+    def library(session):
+        pass
+
     ## hall logic
     def hall(session):
         pass
 
     ## diningroom logic
     def diningroom(session):
+        pass
+
+    ## kitchen logic
+    def kitchen(session):
         pass
 
     ## bust down the currentroom
@@ -31,3 +39,7 @@ def roomlogic(currentroom):
         return hall
     elif currentroom == "Dining Room":
         return diningroom
+    elif currentroom == "Library":
+        return library
+    elif currentroom == "Kitchen":
+        return kitchen

@@ -34,7 +34,6 @@ def go(rooms, direction, currentRoom):
     else:
         return f"You cannot move {direction}."
 
-
 # user types get kitkat (user tries to pick something up)
 def get(kitkat, currentRoom):
     if 'item' in session.get('rooms')[currentRoom]: # does the room have an item to be picked up?
