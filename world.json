@@ -1,20 +1,29 @@
 {
             "Hall": {
-                "north": "Store",
+                "north": "Library",
                 "south": "Kitchen",
                 "east": "Dining Room",
-                "item": "skeleton key"
+                "item": "skeleton key",
+                "desc": "You're standing in a long dimly lit hallway. Doors are to the north and east. An open doorway leads into a dark room to the south."
                 },
             "Kitchen": {
                 "north": "Hall",
-                "item": "monster"
+                "item": "monster",
+                "desc": "You are standing in an old dusty kitchen lit by a spell book lying on the floor. A door is to the north."
                 },
             "Dining Room": {
                 "west": "Hall",
                 "south": "Garden",
-                "item": "potion"
+                "item": "potion",
+                "desc": "You are standing in a dining room. A long wooden table is here surrounded by chairs. Doors lie to the west and south."
                 },
             "Garden": {
-                "north": "Dining Room"
+                "north": "Dining Room",
+                "desc": "You are standing in well kept garden. Clearly, someone spends time working here. The garden is surrounded by smooth walls that appear impossible to climb. A door leads back into the house to the north."
+                },
+            "Library": {
+                "south": "Hall",
+                "item": "spell book",
+                "desc": "You are standing in a library. Cobwebs clutter the corners of the room. The windows in this room are boarded up, although, there is a fire in the hearth. Clearly, someone has been here recently."
                 }
 }

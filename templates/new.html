@@ -9,13 +9,18 @@ Welcome to API-Quest!
 
 <form action = "" method="post">
     <p><input type="hidden" name="neworcontinue" value="newgame"></p>
-    <p><input type="submit" value="New Game"></p>
+    <p><input type="submit" value="New Game!"></p>
 </form>
 
 <form action = "" method="post">
     <p><input type="hidden" name="neworcontinue" value="continuegame"></p>
     <p><input type="submit" value="Continue Game"></p>
 </form>
+
+<audio controls autoplay loop>
+  <source src="{{ url_for('static', filename='soundtrack/an-trh.mp3') }}" type="audio/mpeg">
+  Your browser does not support the audio tag.
+</audio>
 
 </body>
 </html>

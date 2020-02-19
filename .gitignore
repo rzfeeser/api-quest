@@ -1,3 +1,9 @@
+# leave out soundtrack
+static/soundtrack/
+
+# pycharm
+.idea/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
