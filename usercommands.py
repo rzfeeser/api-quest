@@ -53,3 +53,11 @@ def get(kitkat, currentRoom):
 # user types look
 def look(rooms, currentRoom):
     return f"{rooms.get(currentRoom).get('desc')}"
+
+# user types use
+# example: use potion
+# example: use potion on wound
+# example: use feather in potion
+# example: use knife with jelly
+def use(currentRoom):
+    pass

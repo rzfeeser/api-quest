@@ -26,6 +26,8 @@ from usercommands import get
 from usercommands import go
 # parse out look command
 from usercommands import look
+# parse out use command
+#from usercommands import use
 
 """
 Flask Sessions are leveraged to store encrypted cookie data, the player's state, on the client side.
@@ -111,14 +113,8 @@ def status():
 
         # An item is in the room you are in
         if 'item' in session.get('rooms')[session.get('currentRoom')]:
-            status['item'] = session.get('rooms')[(session['currentRoom'])]['item'] # set it within the json
-            ## monster check
-            if status['item'] == 'monster' and "spell book" in session.get('inventory'):
-                session['rooms'][session.get('currentRoom')].pop('item', None) # remove the key item from dictionary
-                session['inventory'].remove("spell book") # remove the item "spell book" from the list
-                session['turnresult'] = "You walk into a dark room. A grue is here. As it approaches you, the spell book falls from your pouch and opens to a page with charcoal drawings of cryptic runes and a drawing of a latern. Bright light suddenly beams from the book eviserating the Grue."
-            elif status['item'] == 'monster':
-                return redirect(url_for("gameover", endreason="lost", endcode="1"))
+            status['item'] = session.get('rooms')[(session['currentRoom'])].get('item') # set it within the json
+            #status['item'] = session.get('rooms')[(session['currentRoom'])]['item'] # set it within the json
         else:
             status['item'] = None
 
