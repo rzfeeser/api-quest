@@ -1,0 +1,24 @@
+on:
+  # Trigger analysis when pushing to your main branches, and when creating a pull request.
+  push:
+    branches:
+      - main
+      - master
+      - devel
+  pull_request:
+      types: [opened, synchronize, reopened]
+
+name: Main Workflow
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        # Disabling shallow clones is recommended for improving the relevancy of reporting
+        fetch-depth: 0
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@v5.2.0 # Ex: v4.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    # generated at https://sonarcloud.io/account/security
+        SONAR_HOST_URL: https://sonarcloud.io      # or define via ${{ vars.SONAR_HOST_URL }}
