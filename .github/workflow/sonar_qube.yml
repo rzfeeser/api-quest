@@ -21,4 +21,4 @@ jobs:
       uses: SonarSource/sonarqube-scan-action@v5.2.0 # Ex: v4.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    # generated at https://sonarcloud.io/account/security
-        SONAR_HOST_URL: https://sonarcloud.io      # or define via ${{ vars.SONAR_HOST_URL }}
+        SONAR_HOST_URL: https://sonarcloud.io      # or define via ${{ vars.SONAR_HOST_URL }} 
