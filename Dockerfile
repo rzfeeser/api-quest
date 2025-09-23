@@ -13,7 +13,6 @@ COPY world.json ./
 COPY endgame.json ./
 COPY templates/ ./templates/
 COPY images/ ./images/
-COPY research/ ./research/
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
