@@ -37,6 +37,7 @@ jobs:
           docker stop flask-test
           docker rm flask-test
 
-      - name: Push Docker image to GitHub Package Registry
+      - name: Push Docker image to GitHub Package Registry (default branch only)
+        if: github.ref == 'refs/heads/main'
         run: |
           docker push ghcr.io/${{ github.repository }}:${{ env.BRANCH_TAG }}
