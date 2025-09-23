@@ -66,7 +66,7 @@ def new():
         if ans == 'newgame' or not session.get("currentRoom"): # or not session.get("inventory"): # not necessary???
             session.clear()   # if "Yes", clear the session cookie
             session["rooms"] = rooms # load the new game with newest world data
-            session["currentRoom"] = "Hall"  # set the location as the Hall
+            session["currentRoom"] = "hall"  # set the location as the hall
             session["health"] = 20  # required for battle system
             session["inventory"] = [] # cast inventory as an empty list
             session["turnno"] = 0 # number of moves taken

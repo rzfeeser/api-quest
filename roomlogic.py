@@ -58,8 +58,8 @@ def roomlogic(currentroom):
         return library
     elif currentroom == "kitchen":
         return kitchen
-    else:
-        def noop(session):
+    #else:
+    #    def noop(session):
             #session["turnresult"] = f"You are in {currentroom}. There is nothing special here."
-            return
-        return noop
+    #        return
+    #    return noop
