@@ -9,10 +9,15 @@ def roomlogic(currentroom):
     ## garden logic
     def garden(session):
         if 'skeleton key' in session.get('inventory'):
-            # x = lambda: redirect(url_for("gameover", endreason="win", endcode="1"))
-            return ("gameover", "win", "1")
+            session["turnresult"] = "The skeleton key opens the gate! But the key is now stuck in the lock."
+            session['inventory'].remove('skeleton key')
+            if session['rooms'].get('garden', {}).get('item') == 'gate':
+                session['rooms']['garden'].pop('item', None)
+            session['rooms']['garden']['south'] = 'maze'
+            session.modified = True
+            return
         else:
-            session["turnresult"] = "You'd win if you only had a few more items..."
+            session["turnresult"] = "You are in the garden and the gate appears locked"
             return
 
     ## library logic
@@ -43,13 +48,13 @@ def roomlogic(currentroom):
             return ("gameover", "lost", "1")
 
     ## bust down the currentroom
-    if currentroom == "Garden":
+    if currentroom == "garden":
         return garden
-    elif currentroom == "Hall":
+    elif currentroom == "hall":
         return hall
-    elif currentroom == "Dining Room":
+    elif currentroom == "dining room":
         return diningroom
-    elif currentroom == "Library":
+    elif currentroom == "library":
         return library
-    elif currentroom == "Kitchen":
+    elif currentroom == "kitchen":
         return kitchen
