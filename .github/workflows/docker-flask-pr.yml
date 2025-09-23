@@ -1,22 +1,12 @@
-name: Build and Publish Flask App Docker Image
+name: Build Flask App Docker Image (PR)
 
 on:
-  push:
+  pull_request:
     branches:
-      - main
-  workflow_dispatch:
-    inputs:
-      publish:
-        description: 'Publish this branch to GitHub Package Registry?'
-        required: true
-        default: 'no'
-        type: choice
-        options:
-          - 'yes'
-          - 'no'
+      - '**'
 
 jobs:
-  build-and-publish:
+  build:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: ${{ github.repository }}
@@ -46,8 +36,3 @@ jobs:
           docker ps | grep flask-test
           docker stop flask-test
           docker rm flask-test
-
-      - name: Push Docker image to GitHub Package Registry
-          if: github.ref_name == 'main' || (github.event_name == 'workflow_dispatch' && github.event.inputs.publish == 'yes')
-          run: |
-            docker push ghcr.io/${{ github.repository }}:${{ env.BRANCH_TAG }}
