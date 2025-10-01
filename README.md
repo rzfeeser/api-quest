@@ -11,4 +11,4 @@ A RPG written in Python 3.7, played across a Flask API framework
 
 
 ### Workflows
-- SonarQube - Scanning project to include code
+- SonarQube - Scanning project to include code   
